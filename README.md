@@ -156,7 +156,7 @@ Modules/{ModuleName}/
  
 Модуль `Core` является фундаментом системы и содержит:
  
-**Аутентификация (`Auth/`)** — Laravel Sanctum (токены для SPA). Эндпоинты: register, login, logout, me. Контроллер `AuthController`, сервис `AuthService`, middleware `RoleMiddleware`. При регистрации пользователю автоматически присваивается роль HR. При повторном входе старые токены отзываются.
+**Аутентификация (`Auth/`)** — Laravel Sanctum (токены для SPA). Эндпоинты: register, login, logout, me. Контроллер `AuthController`, сервис `AuthService`, middleware `RoleMiddleware`. При повторном входе старые токены отзываются.
  
 **Абстракции (`Abstracts/`)** — базовые классы, от которых наследуются все модули: `BaseController` (включает трейты `ApiResponse` + `AuthorizesRequests`), `BaseFormRequest`, `BaseResource`, `BasePolicy` (с универсальной проверкой ролей и автопропуском для Admin), `BaseService` (CRUD-шаблон поверх Eloquent).
  
