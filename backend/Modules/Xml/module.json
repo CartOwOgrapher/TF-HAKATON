@@ -1,0 +1,11 @@
+{
+    "name": "Xml",
+    "alias": "xml",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Xml\\Providers\\XmlServiceProvider"
+    ],
+    "files": []
+}

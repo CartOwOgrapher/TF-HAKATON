@@ -1,0 +1,16 @@
+[
+  {
+    "id": "p1",
+    "full_name": "Иванов Иван Иванович",
+    "company_id": "c1",
+    "company_name": "ООО Ромашка",
+    "email": "ivanov@mail.ru"
+  },
+  {
+    "id": "p2",
+    "full_name": "Петров Петр Петрович",
+    "company_id": "c2",
+    "company_name": "ООО Василек",
+    "email": "petrov@mail.ru"
+  }
+]

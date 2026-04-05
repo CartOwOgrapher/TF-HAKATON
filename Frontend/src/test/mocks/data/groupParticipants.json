@@ -1,0 +1,16 @@
+[
+  {
+    "id": "gp1",
+    "group_id": "g1",
+    "participant_id": "p1",
+    "participant_name": "Иванов Иван Иванович",
+    "completion_percent": 60
+  },
+  {
+    "id": "gp2",
+    "group_id": "g1",
+    "participant_id": "p2",
+    "participant_name": "Петров Петр Петрович",
+    "completion_percent": 40
+  }
+]

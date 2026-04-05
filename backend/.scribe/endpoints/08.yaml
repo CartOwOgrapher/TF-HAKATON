@@ -1,0 +1,732 @@
+name: Спецификации
+description: |-
+
+  CRUD-управление спецификациями обучения и привязка учебных групп.
+  Спецификация объединяет учебные группы одной компании в рамках одного договора.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/specifications
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список спецификаций'
+      description: |-
+        Возвращает пагинированный список спецификаций с вложенными группами и участниками.
+        Поддерживает фильтрацию по компании.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      company_id:
+        custom: []
+        name: company_id
+        description: 'Фильтр по ID компании.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Количество записей на странице. По умолчанию: 15.'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      company_id: 3
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "current_page": 1,
+              "data": [
+                {
+                  "id": 1,
+                  "number": "СП-2026-001",
+                  "date": "2026-01-15",
+                  "company": { "id": 3, "name": "ООО Ромашка" },
+                  "training_groups": []
+                }
+              ],
+              "per_page": 15,
+              "total": 42
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/specifications
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Создать спецификацию'
+      description: |-
+        Создаёт новую спецификацию обучения.
+        Требует роль `accounting` или `hr`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      number:
+        custom: []
+        name: number
+        description: 'Номер спецификации (уникальный).'
+        required: true
+        example: СП-2026-002
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Дата спецификации (YYYY-MM-DD).'
+        required: true
+        example: '2026-04-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      company_id:
+        custom: []
+        name: company_id
+        description: 'ID компании.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      number: СП-2026-002
+      date: '2026-04-01'
+      company_id: 3
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Создано",
+            "data": {
+              "id": 2,
+              "number": "СП-2026-002",
+              "date": "2026-04-01",
+              "company": { "id": 3, "name": "ООО Ромашка" },
+              "training_groups": []
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The number has already been taken." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/specifications/{specification_id}'
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Получить спецификацию'
+      description: |-
+        Возвращает детальную информацию о спецификации, включая компанию,
+        все учебные группы с курсами и участниками.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'The ID of the specification.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification:
+        custom: []
+        name: specification
+        description: 'ID спецификации.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      specification_id: 1
+      specification: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "number": "СП-2026-001",
+              "date": "2026-01-15",
+              "company": { "id": 3, "name": "ООО Ромашка" },
+              "training_groups": [
+                { "id": 5, "course": { "title": "Охрана труда" }, "participants": [] }
+              ]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [Specification]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/specifications/{specification_id}'
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить спецификацию'
+      description: |-
+        Обновляет данные существующей спецификации.
+        Требует роль `accounting` или `hr`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'The ID of the specification.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification:
+        custom: []
+        name: specification
+        description: 'ID спецификации.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      specification_id: 1
+      specification: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      number:
+        custom: []
+        name: number
+        description: 'Номер спецификации.'
+        required: false
+        example: СП-2026-001-rev
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Дата (YYYY-MM-DD).'
+        required: false
+        example: '2026-04-05'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      company_id:
+        custom: []
+        name: company_id
+        description: 'ID компании.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      number: СП-2026-001-rev
+      date: '2026-04-05'
+      company_id: 3
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": { "id": 1, "number": "СП-2026-001-rev", "date": "2026-04-05" }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [Specification]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/specifications/{specification_id}'
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Удалить спецификацию'
+      description: |-
+        Удаляет спецификацию. Все привязанные учебные группы открепляются
+        (поле `specification_id` сбрасывается в `null`).
+        Требует роль `accounting`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'The ID of the specification.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification:
+        custom: []
+        name: specification
+        description: 'ID спецификации.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      specification_id: 1
+      specification: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [Specification]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/specifications/{specification_id}/groups/{training_group_id}'
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Привязать учебную группу к спецификации'
+      description: |-
+        Устанавливает связь между спецификацией и учебной группой.
+        Группа не может быть привязана к двум спецификациям одновременно —
+        при попытке будет возвращена ошибка `422`.
+        Требует роль `accounting` или `hr`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'The ID of the specification.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification:
+        custom: []
+        name: specification
+        description: 'ID спецификации.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      specification_id: 1
+      training_group_id: architecto
+      specification: 1
+      training_group: 5
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "number": "СП-2026-001",
+              "training_groups": [ { "id": 5 } ]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [Specification]." }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "Группа #5 уже привязана к спецификации #3" }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/specifications/{specification_id}/groups/{training_group_id}'
+    metadata:
+      custom: []
+      groupName: Спецификации
+      groupDescription: |-
+
+        CRUD-управление спецификациями обучения и привязка учебных групп.
+        Спецификация объединяет учебные группы одной компании в рамках одного договора.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Открепить учебную группу от спецификации'
+      description: |-
+        Сбрасывает `specification_id` у учебной группы (обнуляет связь).
+        Требует роль `accounting` или `hr`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'The ID of the specification.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification:
+        custom: []
+        name: specification
+        description: 'ID спецификации.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      specification_id: 1
+      training_group_id: architecto
+      specification: 1
+      training_group: 5
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "number": "СП-2026-001",
+              "training_groups": []
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [Specification]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

@@ -1,0 +1,738 @@
+name: 'Учебные группы'
+description: |-
+
+  CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/training-groups
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список учебных групп'
+      description: |-
+        Возвращает пагинированный список учебных групп с курсами и участниками.
+        Поддерживает фильтрацию по статусу.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Фильтр по статусу: `planned`, `in_progress`, `completed`, `cancelled`.'
+        required: false
+        example: planned
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Количество записей на странице. По умолчанию: 15.'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: planned
+      per_page: 15
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "current_page": 1,
+              "data": [
+                {
+                  "id": 1,
+                  "course": { "id": 3, "title": "Охрана труда", "code": "OT-001" },
+                  "start_date": "2026-03-01",
+                  "end_date": "2026-03-05",
+                  "status": "planned",
+                  "status_label": "Запланирована",
+                  "participants_count": 10,
+                  "average_progress": 0
+                }
+              ],
+              "per_page": 15,
+              "total": 30
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/training-groups
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Создать учебную группу'
+      description: |-
+        Создаёт новую учебную группу. Статус по умолчанию — `planned`.
+        Требует политику `create` модели TrainingGroup.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      course_id:
+        custom: []
+        name: course_id
+        description: 'ID курса.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Дата начала (YYYY-MM-DD).'
+        required: true
+        example: '2026-05-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Дата окончания (YYYY-MM-DD).'
+        required: true
+        example: '2026-05-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Начальный статус. По умолчанию: `planned`.'
+        required: false
+        example: planned
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'ID спецификации.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      course_id: 3
+      start_date: '2026-05-01'
+      end_date: '2026-05-10'
+      status: planned
+      specification_id: 1
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Создано",
+            "data": {
+              "id": 7,
+              "course": { "id": 3, "title": "Охрана труда" },
+              "start_date": "2026-05-01",
+              "end_date": "2026-05-10",
+              "status": "planned"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The start date must be a date before end date." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/training-groups/{training_group_id}'
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Получить учебную группу'
+      description: 'Возвращает детальную информацию о группе, включая курс и участников с данными сотрудников.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "course": { "id": 3, "title": "Охрана труда" },
+              "start_date": "2026-03-01",
+              "end_date": "2026-03-05",
+              "status": "planned",
+              "participants": [
+                {
+                  "id": 10,
+                  "employee": { "id": 5, "full_name": "Иванов Иван Иванович" },
+                  "completion_percent": 0
+                }
+              ]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/training-groups/{training_group_id}'
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить учебную группу'
+      description: |-
+        Обновляет данные учебной группы.
+        Требует политику `update` модели TrainingGroup.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      course_id:
+        custom: []
+        name: course_id
+        description: 'ID курса.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Дата начала (YYYY-MM-DD).'
+        required: false
+        example: '2026-05-05'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Дата окончания (YYYY-MM-DD).'
+        required: false
+        example: '2026-05-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: planned
+        type: string
+        enumValues:
+          - planned
+          - in_progress
+          - completed
+          - cancelled
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      specification_id:
+        custom: []
+        name: specification_id
+        description: 'ID спецификации или null.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      course_id: 3
+      start_date: '2026-05-05'
+      end_date: '2026-05-15'
+      status: planned
+      specification_id: 1
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": { "id": 1, "start_date": "2026-05-05", "end_date": "2026-05-15" }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/training-groups/{training_group_id}'
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Удалить учебную группу'
+      description: |-
+        Удаляет учебную группу вместе со всеми её участниками.
+        Требует политику `delete` модели TrainingGroup.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/training-groups/{training_group_id}/status'
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Сменить статус учебной группы'
+      description: |-
+        Изменяет статус группы согласно допустимым переходам машины состояний.
+        Недопустимые переходы возвращают ошибку `422`.
+
+        Допустимые переходы:
+        - `planned` → `in_progress`, `cancelled`
+        - `in_progress` → `completed`, `cancelled`
+        - `completed`, `cancelled` — финальные статусы, переходов нет
+
+        Требует политику `changeStatus` модели TrainingGroup.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Новый статус. Допустимые значения: `planned`, `in_progress`, `completed`, `cancelled`.'
+        required: true
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: in_progress
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": { "id": 1, "status": "in_progress", "status_label": "В процессе" }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "Недопустимый переход статуса: Запланирована → Завершена" }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/training-groups/{training_group_id}/conflicts'
+    metadata:
+      custom: []
+      groupName: 'Учебные группы'
+      groupDescription: |-
+
+        CRUD-управление учебными группами, смена статусов и поиск конфликтов по датам.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Конфликты учебной группы'
+      description: |-
+        Возвращает список учебных групп, чьи даты пересекаются с датами указанной группы
+        в рамках одного курса. Используется для диагностики перед назначением дат.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": [
+              {
+                "id": 4,
+                "course": { "title": "Охрана труда" },
+                "start_date": "2026-03-01",
+                "end_date": "2026-03-05",
+                "status": "planned"
+              }
+            ]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

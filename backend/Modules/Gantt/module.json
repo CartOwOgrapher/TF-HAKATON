@@ -1,0 +1,11 @@
+{
+    "name": "Gantt",
+    "alias": "gantt",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Gantt\\Providers\\GanttServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,515 @@
+name: Сотрудники
+description: |-
+
+  Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/employees/create
+    metadata:
+      custom: []
+      groupName: Сотрудники
+      groupDescription: |-
+
+        Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Создать сотрудника'
+      description: 'Создаёт нового сотрудника и привязывает его к компании.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_code:
+        custom: []
+        name: employee_code
+        description: 'Уникальный табельный номер (до 50 символов).'
+        required: true
+        example: EMP001
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Фамилия (до 100 символов).'
+        required: true
+        example: Иванов
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Имя (до 100 символов).'
+        required: true
+        example: Иван
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      middle_name:
+        custom: []
+        name: middle_name
+        description: 'nullable Отчество (до 100 символов).'
+        required: false
+        example: Иванович
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      full_name:
+        custom: []
+        name: full_name
+        description: 'Полное ФИО (до 255 символов).'
+        required: true
+        example: 'Иванов Иван Иванович'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'nullable Уникальный email сотрудника.'
+        required: false
+        example: ivanov@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      company_id:
+        custom: []
+        name: company_id
+        description: 'Идентификатор компании (должна существовать).'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      employee_code: EMP001
+      last_name: Иванов
+      first_name: Иван
+      middle_name: Иванович
+      full_name: 'Иванов Иван Иванович'
+      email: ivanov@example.com
+      company_id: 1
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "message": "Сотрудник создан",
+            "data": {
+              "employee": {
+                "id": 1,
+                "employee_code": "EMP001",
+                "full_name": "Иванов Иван Иванович",
+                "email": "ivanov@example.com",
+                "company_id": 1
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "The given data was invalid.",
+            "errors": {
+              "employee_code": ["Сотрудник с таким табельным номером уже существует."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/employees/list
+    metadata:
+      custom: []
+      groupName: Сотрудники
+      groupDescription: |-
+
+        Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список сотрудников'
+      description: 'Возвращает список всех сотрудников с информацией о связанной компании.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "employees": [
+              {
+                "id": 1,
+                "employee_code": "EMP001",
+                "last_name": "Иванов",
+                "first_name": "Иван",
+                "middle_name": "Иванович",
+                "full_name": "Иванов Иван Иванович",
+                "email": "ivanov@example.com",
+                "company_id": 1,
+                "company": {
+                  "id": 1,
+                  "name": "ООО Ромашка"
+                }
+              }
+            ]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/employees/{id}'
+    metadata:
+      custom: []
+      groupName: Сотрудники
+      groupDescription: |-
+
+        Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить сотрудника'
+      description: 'Обновляет данные существующего сотрудника по его идентификатору.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор сотрудника.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_code:
+        custom: []
+        name: employee_code
+        description: 'Уникальный табельный номер (до 50 символов).'
+        required: true
+        example: EMP002
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Фамилия (до 100 символов).'
+        required: true
+        example: Петров
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Имя (до 100 символов).'
+        required: true
+        example: Пётр
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      middle_name:
+        custom: []
+        name: middle_name
+        description: 'nullable Отчество (до 100 символов).'
+        required: false
+        example: Петрович
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      full_name:
+        custom: []
+        name: full_name
+        description: 'Полное ФИО (до 255 символов).'
+        required: true
+        example: 'Петров Пётр Петрович'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'nullable Уникальный email сотрудника.'
+        required: false
+        example: petrov@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      company_id:
+        custom: []
+        name: company_id
+        description: 'Идентификатор компании.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      employee_code: EMP002
+      last_name: Петров
+      first_name: Пётр
+      middle_name: Петрович
+      full_name: 'Петров Пётр Петрович'
+      email: petrov@example.com
+      company_id: 1
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Сотрудник обновлён",
+            "data": {
+              "employee": {
+                "id": 1,
+                "employee_code": "EMP002",
+                "full_name": "Петров Пётр Петрович"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Employee] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/employees/{id}/soft'
+    metadata:
+      custom: []
+      groupName: Сотрудники
+      groupDescription: |-
+
+        Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Мягкое удаление сотрудника'
+      description: |-
+        Помечает сотрудника как удалённого (soft delete). Запись остаётся в базе данных
+        и может быть восстановлена.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор сотрудника.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Сотрудник удалён (soft)",
+            "data": {
+              "employee": {
+                "id": 1,
+                "full_name": "Иванов Иван Иванович",
+                "deleted_at": "2026-04-05T12:00:00.000000Z"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Employee] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/employees/{id}/hard'
+    metadata:
+      custom: []
+      groupName: Сотрудники
+      groupDescription: |-
+
+        Управление сотрудниками компаний: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Жёсткое удаление сотрудника'
+      description: 'Безвозвратно удаляет сотрудника из базы данных, включая ранее мягко удалённые записи.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор сотрудника.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Сотрудник удалён",
+            "data": {
+              "employee": {
+                "id": 1,
+                "full_name": "Иванов Иван Иванович"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Employee] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

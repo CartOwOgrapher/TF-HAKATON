@@ -1,0 +1,600 @@
+name: 'Диаграмма Ганта'
+description: |-
+
+  Управление представлением учебных групп в формате диаграммы Ганта:
+  фильтрация по периоду и статусу, обновление дат и цвета, экспорт в CSV/JSON.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/gantt
+    metadata:
+      custom: []
+      groupName: 'Диаграмма Ганта'
+      groupDescription: |-
+
+        Управление представлением учебных групп в формате диаграммы Ганта:
+        фильтрация по периоду и статусу, обновление дат и цвета, экспорт в CSV/JSON.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список элементов Ганта'
+      description: |-
+        Возвращает учебные группы в заданном периоде с цветами, прогрессом и флагами конфликтов.
+        Если у группы ещё не назначен цвет — он назначается автоматически на основе курса.
+        Конфликтом считается пересечение дат двух групп одного курса.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      from:
+        custom: []
+        name: from
+        description: 'Начало периода (YYYY-MM-DD).'
+        required: true
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      to:
+        custom: []
+        name: to
+        description: 'Конец периода (YYYY-MM-DD).'
+        required: true
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Фильтр по статусу группы. Допустимые значения: `planned`, `in_progress`, `completed`, `cancelled`.'
+        required: false
+        example: planned
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      course_id:
+        custom: []
+        name: course_id
+        description: 'Фильтр по ID курса.'
+        required: false
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      from: '2026-01-01'
+      to: '2026-12-31'
+      status: planned
+      course_id: 5
+    bodyParameters:
+      from:
+        custom: []
+        name: from
+        description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>.'
+        required: false
+        example: '2026-04-05'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to:
+        custom: []
+        name: to
+        description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from</code>.'
+        required: false
+        example: '2052-04-28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      course_id:
+        custom: []
+        name: course_id
+        description: 'The <code>id</code> of an existing record in the courses table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      from: '2026-04-05'
+      to: '2052-04-28'
+      status: architecto
+      course_id: 16
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "period": { "from": "2026-01-01", "to": "2026-12-31" },
+              "total": 2,
+              "palette": ["#3B82F6", "#10B981"],
+              "items": [
+                {
+                  "id": 1,
+                  "text": "Охрана труда",
+                  "course_id": 3,
+                  "course_code": "OT-001",
+                  "specification_id": 10,
+                  "start_date": "2026-02-01",
+                  "end_date": "2026-02-05",
+                  "duration": 5,
+                  "status": "planned",
+                  "status_label": "Запланирована",
+                  "progress": 0.0,
+                  "progress_percent": 0,
+                  "participant_count": 12,
+                  "price_per_person": "3500.00",
+                  "total_cost": 42000,
+                  "color": "#3B82F6",
+                  "conflict_ids": []
+                }
+              ]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "Недопустимое значение статуса: unknown" }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/gantt/export
+    metadata:
+      custom: []
+      groupName: 'Диаграмма Ганта'
+      groupDescription: |-
+
+        Управление представлением учебных групп в формате диаграммы Ганта:
+        фильтрация по периоду и статусу, обновление дат и цвета, экспорт в CSV/JSON.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Экспорт данных Ганта'
+      description: |-
+        Выгружает учебные группы за указанный период в формате CSV или JSON.
+        Формат определяется параметром `format` (по умолчанию — CSV).
+        CSV содержит BOM для корректного открытия в Excel.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      from:
+        custom: []
+        name: from
+        description: 'Начало периода (YYYY-MM-DD).'
+        required: true
+        example: '2026-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      to:
+        custom: []
+        name: to
+        description: 'Конец периода (YYYY-MM-DD).'
+        required: true
+        example: '2026-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      format:
+        custom: []
+        name: format
+        description: 'Формат файла: `csv` или `json`. По умолчанию: `csv`.'
+        required: false
+        example: csv
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Фильтр по статусу.'
+        required: false
+        example: completed
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      course_id:
+        custom: []
+        name: course_id
+        description: 'Фильтр по ID курса.'
+        required: false
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      from: '2026-01-01'
+      to: '2026-12-31'
+      format: csv
+      status: completed
+      course_id: 5
+    bodyParameters:
+      from:
+        custom: []
+        name: from
+        description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>.'
+        required: false
+        example: '2026-04-05'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      to:
+        custom: []
+        name: to
+        description: 'Must be a valid date. Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from</code>.'
+        required: false
+        example: '2052-04-28'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      format:
+        custom: []
+        name: format
+        description: ''
+        required: false
+        example: json
+        type: string
+        enumValues:
+          - csv
+          - json
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      course_id:
+        custom: []
+        name: course_id
+        description: 'The <code>id</code> of an existing record in the courses table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      from: '2026-04-05'
+      to: '2052-04-28'
+      format: json
+      course_id: 16
+      status: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "Content-Type": "text/csv; charset=UTF-8",
+            "Content-Disposition": "attachment; filename=\"gantt_2026-01-01_2026-12-31.csv\""
+          }
+        headers: []
+        description: CSV
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "Content-Type": "application/json; charset=UTF-8",
+            "Content-Disposition": "attachment; filename=\"gantt_2026-01-01_2026-12-31.json\""
+          }
+        headers: []
+        description: JSON
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/gantt/{trainingGroup_id}/dates'
+    metadata:
+      custom: []
+      groupName: 'Диаграмма Ганта'
+      groupDescription: |-
+
+        Управление представлением учебных групп в формате диаграммы Ганта:
+        фильтрация по периоду и статусу, обновление дат и цвета, экспорт в CSV/JSON.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить даты группы'
+      description: |-
+        Изменяет даты начала и окончания учебной группы.
+        После обновления возвращает обновлённый элемент Ганта и список конфликтующих групп
+        (те, у кого совпадают даты начала в рамках того же курса).
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      trainingGroup_id:
+        custom: []
+        name: trainingGroup_id
+        description: 'The ID of the trainingGroup.'
+        required: true
+        example: 19
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      trainingGroup:
+        custom: []
+        name: trainingGroup
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      trainingGroup_id: 19
+      trainingGroup: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Новая дата начала (YYYY-MM-DD).'
+        required: true
+        example: '2026-03-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Новая дата окончания (YYYY-MM-DD).'
+        required: true
+        example: '2026-03-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      start_date: '2026-03-01'
+      end_date: '2026-03-10'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "item": { "id": 1, "start_date": "2026-03-01", "end_date": "2026-03-10" },
+              "conflicts": [
+                { "id": 7, "start_date": "2026-03-01", "end_date": "2026-03-08" }
+              ]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The end date must be a date after start date." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/gantt/{trainingGroup_id}/color'
+    metadata:
+      custom: []
+      groupName: 'Диаграмма Ганта'
+      groupDescription: |-
+
+        Управление представлением учебных групп в формате диаграммы Ганта:
+        фильтрация по периоду и статусу, обновление дат и цвета, экспорт в CSV/JSON.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить цвет группы на Ганте'
+      description: |-
+        Устанавливает цвет отображения учебной группы на диаграмме Ганта.
+        Цвет должен быть из стандартной палитры (см. `GanttColorService::PALETTE`).
+        Если цвет не передан — назначается автоматически по ID курса.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      trainingGroup_id:
+        custom: []
+        name: trainingGroup_id
+        description: 'The ID of the trainingGroup.'
+        required: true
+        example: 19
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      trainingGroup:
+        custom: []
+        name: trainingGroup
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      trainingGroup_id: 19
+      trainingGroup: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      color:
+        custom: []
+        name: color
+        description: 'HEX-код цвета из палитры.'
+        required: true
+        example: '#3B82F6'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      color: '#3B82F6'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "color": "#3B82F6"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The color must be a valid hex color." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

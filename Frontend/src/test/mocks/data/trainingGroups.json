@@ -1,0 +1,14 @@
+[
+  {
+    "id": "g1",
+    "course_id": "course1",
+    "course_name": "Охрана труда",
+    "start_date": "2026-04-01",
+    "end_date": "2026-04-05",
+    "status": "В процессе",
+    "participant_count": 2,
+    "price_per_person": 10000,
+    "total_cost": 20000,
+    "average_progress": 50
+  }
+]

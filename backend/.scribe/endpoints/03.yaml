@@ -1,0 +1,315 @@
+name: Аутентификация
+description: |-
+
+  Регистрация, вход, выход и получение профиля текущего пользователя.
+  Используется Sanctum token-based аутентификация.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/register
+    metadata:
+      custom: []
+      groupName: Аутентификация
+      groupDescription: |-
+
+        Регистрация, вход, выход и получение профиля текущего пользователя.
+        Используется Sanctum token-based аутентификация.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Регистрация нового пользователя'
+      description: 'Создаёт нового пользователя с ролью `HR` и возвращает Sanctum-токен.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Имя пользователя.'
+        required: true
+        example: 'Иван Иванов'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: Email-адрес.
+        required: true
+        example: ivan@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Пароль (минимум 8 символов).'
+        required: true
+        example: secret123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Подтверждение пароля.'
+        required: true
+        example: secret123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Иван Иванов'
+      email: ivan@example.com
+      password: secret123
+      password_confirmation: secret123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Регистрация прошла успешно",
+            "data": {
+              "user": {
+                "id": 1,
+                "name": "Иван Иванов",
+                "email": "ivan@example.com",
+                "role": "hr"
+              },
+              "token": "1|abc123..."
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "The email has already been taken.",
+            "errors": { "email": ["The email has already been taken."] }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/login
+    metadata:
+      custom: []
+      groupName: Аутентификация
+      groupDescription: |-
+
+        Регистрация, вход, выход и получение профиля текущего пользователя.
+        Используется Sanctum token-based аутентификация.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Вход в систему'
+      description: |-
+        Проверяет учётные данные, инвалидирует все предыдущие токены пользователя
+        и выдаёт новый Sanctum-токен.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: Email-адрес.
+        required: true
+        example: ivan@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: Пароль.
+        required: true
+        example: secret123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: ivan@example.com
+      password: secret123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Вход выполнен",
+            "data": {
+              "user": {
+                "id": 1,
+                "name": "Иван Иванов",
+                "email": "ivan@example.com",
+                "role": "hr"
+              },
+              "token": "2|xyz789..."
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "The given data was invalid.",
+            "errors": { "email": ["Неверный email или пароль."] }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/logout
+    metadata:
+      custom: []
+      groupName: Аутентификация
+      groupDescription: |-
+
+        Регистрация, вход, выход и получение профиля текущего пользователя.
+        Используется Sanctum token-based аутентификация.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Выход из системы'
+      description: 'Инвалидирует текущий токен пользователя.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Выход выполнен",
+            "data": null
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/auth/me
+    metadata:
+      custom: []
+      groupName: Аутентификация
+      groupDescription: |-
+
+        Регистрация, вход, выход и получение профиля текущего пользователя.
+        Используется Sanctum token-based аутентификация.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Текущий пользователь'
+      description: 'Возвращает профиль аутентифицированного пользователя.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 1,
+              "name": "Иван Иванов",
+              "email": "ivan@example.com",
+              "role": "hr"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{ "message": "Unauthenticated." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

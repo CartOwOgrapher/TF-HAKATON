@@ -1,0 +1,53 @@
+services:
+  # ───────────────────── Backend ─────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: erp_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html:z
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:z
+    depends_on:
+      - php
+    networks:
+      - erp_network
+    restart: unless-stopped
+
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: erp_php
+    volumes:
+      - ./backend:/var/www/html:z
+    depends_on:
+      - mysql
+    networks:
+      - erp_network
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: erp_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-erp_training}
+      MYSQL_USER: ${DB_USERNAME:-erp_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - erp_network
+    restart: unless-stopped
+
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  erp_network:
+    driver: bridge

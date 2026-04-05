@@ -1,0 +1,13 @@
+[
+  {
+    "id": "s1",
+    "document_number": "SPEC-001",
+    "document_date": "2026-04-01",
+    "company_id": "c1",
+    "company_name": "ООО Ромашка",
+    "group_ids": ["g1"],
+    "total_without_vat": 20000,
+    "vat_amount": 4400,
+    "total_with_vat": 24400
+  }
+]

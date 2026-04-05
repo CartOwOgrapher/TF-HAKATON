@@ -1,0 +1,392 @@
+name: Компании
+description: |-
+
+  Управление компаниями: создание, обновление, получение списка и удаление.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/companies/create
+    metadata:
+      custom: []
+      groupName: Компании
+      groupDescription: |-
+
+        Управление компаниями: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Создать компанию'
+      description: 'Создаёт новую компанию с уникальным кодом и названием.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      code:
+        custom: []
+        name: code
+        description: 'Уникальный код компании (до 10 символов).'
+        required: true
+        example: COMP01
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Название компании (до 255 символов).'
+        required: true
+        example: 'ООО Ромашка'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      code: COMP01
+      name: 'ООО Ромашка'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "message": "Компания создана",
+            "data": {
+              "company": {
+                "id": 1,
+                "code": "COMP01",
+                "name": "ООО Ромашка",
+                "created_at": "2026-04-01T10:00:00.000000Z",
+                "updated_at": "2026-04-01T10:00:00.000000Z"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "The given data was invalid.",
+            "errors": {
+              "code": ["Компания с таким кодом уже существует."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/companies/list
+    metadata:
+      custom: []
+      groupName: Компании
+      groupDescription: |-
+
+        Управление компаниями: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список компаний'
+      description: 'Возвращает список всех компаний без пагинации.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "companies": [
+              {
+                "id": 1,
+                "code": "COMP01",
+                "name": "ООО Ромашка",
+                "created_at": "2026-04-01T10:00:00.000000Z",
+                "updated_at": "2026-04-01T10:00:00.000000Z"
+              }
+            ]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/companies/{id}'
+    metadata:
+      custom: []
+      groupName: Компании
+      groupDescription: |-
+
+        Управление компаниями: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить компанию'
+      description: 'Обновляет код и название существующей компании по её идентификатору.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор компании.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      code:
+        custom: []
+        name: code
+        description: 'Уникальный код компании (до 10 символов).'
+        required: true
+        example: COMP02
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Название компании (до 255 символов).'
+        required: true
+        example: 'АО Лютик'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      code: COMP02
+      name: 'АО Лютик'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Компания обновлена",
+            "data": {
+              "company": {
+                "id": 1,
+                "code": "COMP02",
+                "name": "АО Лютик",
+                "created_at": "2026-04-01T10:00:00.000000Z",
+                "updated_at": "2026-04-05T12:00:00.000000Z"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Company] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/companies/{id}/soft'
+    metadata:
+      custom: []
+      groupName: Компании
+      groupDescription: |-
+
+        Управление компаниями: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Мягкое удаление компании'
+      description: |-
+        Помечает компанию как удалённую (soft delete), не удаляя запись из базы данных.
+        Запись можно восстановить.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор компании.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Компания удалена (soft)",
+            "data": {
+              "company": {
+                "id": 1,
+                "code": "COMP01",
+                "name": "ООО Ромашка",
+                "deleted_at": "2026-04-05T12:00:00.000000Z"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Company] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/companies/{id}/hard'
+    metadata:
+      custom: []
+      groupName: Компании
+      groupDescription: |-
+
+        Управление компаниями: создание, обновление, получение списка и удаление.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Жёсткое удаление компании'
+      description: 'Безвозвратно удаляет компанию из базы данных, включая ранее мягко удалённые записи.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Идентификатор компании.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "message": "Компания удалена полностью",
+            "data": {
+              "company": {
+                "id": 1,
+                "code": "COMP01",
+                "name": "ООО Ромашка"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Company] 99"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

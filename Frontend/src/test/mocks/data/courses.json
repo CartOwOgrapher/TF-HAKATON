@@ -1,0 +1,16 @@
+[
+  {
+    "id": "course1",
+    "name": "Охрана труда",
+    "description": "Базовый курс",
+    "duration_days": 5,
+    "price_per_person": 10000
+  },
+  {
+    "id": "course2",
+    "name": "Пожарная безопасность",
+    "description": "Обязательное обучение",
+    "duration_days": 3,
+    "price_per_person": 8000
+  }
+]

@@ -1,0 +1,445 @@
+name: 'Участники учебной группы'
+description: |-
+
+  Управление составом участников учебной группы и их прогрессом.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/training-groups/{training_group_id}/participants'
+    metadata:
+      custom: []
+      groupName: 'Участники учебной группы'
+      groupDescription: |-
+
+        Управление составом участников учебной группы и их прогрессом.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Список участников группы'
+      description: 'Возвращает всех участников указанной учебной группы с данными сотрудников.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": [
+              {
+                "id": 10,
+                "employee": {
+                  "id": 5,
+                  "full_name": "Иванов Иван Иванович",
+                  "employee_code": "EMP-001"
+                },
+                "completion_percent": 75,
+                "certificate_path": null
+              }
+            ]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/training-groups/{training_group_id}/participants'
+    metadata:
+      custom: []
+      groupName: 'Участники учебной группы'
+      groupDescription: |-
+
+        Управление составом участников учебной группы и их прогрессом.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Добавить участника в группу'
+      description: |-
+        Добавляет сотрудника в учебную группу с начальным прогрессом 0%.
+        После добавления автоматически пересчитывается стоимость группы (через Observer).
+        Требует политику `update` учебной группы.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      training_group: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      employee_id:
+        custom: []
+        name: employee_id
+        description: 'ID сотрудника.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      employee_id: 5
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Создано",
+            "data": {
+              "id": 11,
+              "employee": { "id": 5, "full_name": "Петров Пётр Петрович" },
+              "completion_percent": 0,
+              "certificate_path": null
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [TrainingGroup]." }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The employee id field is required." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/training-groups/{training_group_id}/participants/{participant_id}'
+    metadata:
+      custom: []
+      groupName: 'Участники учебной группы'
+      groupDescription: |-
+
+        Управление составом участников учебной группы и их прогрессом.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Обновить прогресс участника'
+      description: |-
+        Устанавливает процент прохождения обучения для участника.
+        Значение автоматически ограничивается диапазоном [0, 100].
+        После обновления пересчитывается средний прогресс группы.
+        Требует политику `updateProgress` учебной группы.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      participant_id:
+        custom: []
+        name: participant_id
+        description: 'The ID of the participant.'
+        required: true
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      participant:
+        custom: []
+        name: participant
+        description: 'ID записи участника группы.'
+        required: true
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      participant_id: 22
+      training_group: 1
+      participant: 10
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      completion_percent:
+        custom: []
+        name: completion_percent
+        description: 'Процент прохождения (0–100).'
+        required: true
+        example: 75.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      completion_percent: 75.0
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "OK",
+            "data": {
+              "id": 10,
+              "employee": { "id": 5, "full_name": "Иванов Иван Иванович" },
+              "completion_percent": 75,
+              "certificate_path": null
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [GroupParticipant]." }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{ "message": "The completion percent must be between 0 and 100." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/training-groups/{training_group_id}/participants/{participant_id}'
+    metadata:
+      custom: []
+      groupName: 'Участники учебной группы'
+      groupDescription: |-
+
+        Управление составом участников учебной группы и их прогрессом.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Удалить участника из группы'
+      description: |-
+        Исключает участника из учебной группы.
+        После удаления автоматически пересчитывается стоимость группы (через Observer).
+        Требует политику `update` учебной группы.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      training_group_id:
+        custom: []
+        name: training_group_id
+        description: 'The ID of the training group.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      participant_id:
+        custom: []
+        name: participant_id
+        description: 'The ID of the participant.'
+        required: true
+        example: 22
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      training_group:
+        custom: []
+        name: training_group
+        description: 'ID учебной группы.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      participant:
+        custom: []
+        name: participant
+        description: 'ID записи участника группы.'
+        required: true
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      training_group_id: architecto
+      participant_id: 22
+      training_group: 1
+      participant: 10
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{ "success": false, "message": "Недостаточно прав" }'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{ "message": "No query results for model [GroupParticipant]." }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
