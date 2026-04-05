@@ -503,5 +503,9 @@ npm install
 # Запуск dev-сервера
 npm run dev
 ```
- 
+ ### Документация
+ ```bash
+php artisan scribe:generate
+http://localhost:8080/docs
+```
 ---
